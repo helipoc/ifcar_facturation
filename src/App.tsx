@@ -1,40 +1,25 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import icon from '../assets/icon.svg';
-import './App.global.css';
-
+import { BrowserRouter as Router, Switch, Route,Link } from 'react-router-dom';
+import Client from "./components/Client"
+import Facturation from "./components/Facturation"
 const Hello = () => {
   return (
-    <div>
-      <div className="Hello">
-        <img width="200px" alt="icon" src={icon} />
+    <div className="container" style={{height:"80vh"}}>
+      <div className="row mb-5 mt-5" >
+        <div className="col mb-5">
+        <h1 className="display-1 d-flex justify-content-center text-secondary">S.I IFCAR Facturation</h1>
+        </div>
       </div>
-      <h1>electron-react-boilerplate</h1>
-      <div className="Hello">
-        <a
-          href="https://electron-react-boilerplate.js.org/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              📚
-            </span>
-            Read our docs
-          </button>
-        </a>
-        <a
-          href="https://github.com/sponsors/electron-react-boilerplate"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <button type="button">
-            <span role="img" aria-label="books">
-              🙏
-            </span>
-            Donate
-          </button>
-        </a>
+      <div className="row">
+        <div className="col mb-5  d-flex justify-content-center">
+          <Link to='/clients'><button className="btn btn-success" style={{width:"8em"}}>Clients</button></Link>
+        </div>
+      </div>
+      <div className="row">
+        <div className="col d-flex justify-content-center">
+          <Link to="/facturation"><button className="btn btn-primary" style={{marginRight:"8em",width:"8em"}}>Facturation</button></Link>
+          <button className="btn btn-warning" style={{width:"8em"}}>Rapport</button>
+        </div>
       </div>
     </div>
   );
@@ -44,6 +29,8 @@ export default function App() {
   return (
     <Router>
       <Switch>
+        <Route path="/clients" component={Client} />
+        <Route path="/facturation" component={Facturation} />
         <Route path="/" component={Hello} />
       </Switch>
     </Router>
