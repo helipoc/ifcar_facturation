@@ -7,9 +7,11 @@ export default function GoHome() {
 
     return(
         <div className="row mt-2">
-        <Link to="/">
+            <div className="col-sm">
+            <Link to="/">
             <button className="btn btn-danger"><b>⬅️ PAGE D'ACCUEIL</b></button>
-        </Link>
+            </Link>
+            </div>
         </div>
     )
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route,Link } from 'react-router-dom';
 import Client from "./components/Client"
 import Facturation from "./components/Facturation"
+import Ajouter from './components/Facturation/AjouterFacture';
 const Hello = () => {
   return (
     <div className="container" style={{height:"80vh"}}>
@@ -30,6 +31,7 @@ export default function App() {
     <Router>
       <Switch>
         <Route path="/clients" component={Client} />
+        <Route path="/facturation/ajouter" exact component={Ajouter} />
         <Route path="/facturation" component={Facturation} />
         <Route path="/" component={Hello} />
       </Switch>
