@@ -4,8 +4,8 @@ import FormationForm from './FormationForm';
 import RecrutementForm from './RecrutementForm';
 
 export default function Ajouter() {
-  const [type1, setType1] = useState('');
-  const [type2, setType2] = useState('');
+  const [type1, setType1] = useState('facture');
+  const [type2, setType2] = useState('formation');
   const onChangeType1 = (e: any) => setType1(e.target.value);
   const onChangeType2 = (e: any) => setType2(e.target.value);
   return (
@@ -31,6 +31,7 @@ export default function Ajouter() {
                 name="type"
                 value="facture"
                 onClick={onChangeType1}
+                checked={type1 == 'facture'}
               />
               <label className="form-check-label">Facutre</label>
             </div>
@@ -54,6 +55,7 @@ export default function Ajouter() {
                   name="typeFacture"
                   value="formation"
                   onClick={onChangeType2}
+                  checked={type2 == 'formation'}
                 />
                 <label className="form-check-label">Formation</label>
               </div>
