@@ -248,6 +248,8 @@
     "yarn-deduplicate": "^3.1.0"
   },
   "dependencies": {
+    "convertir-nombre-lettre": "^1.0.2",
+    "easy-template-x": "^2.0.0",
     "electron-debug": "^3.1.0",
     "electron-log": "^4.2.4",
     "electron-updater": "^4.3.4",

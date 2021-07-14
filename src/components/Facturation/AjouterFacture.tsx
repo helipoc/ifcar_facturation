@@ -32,6 +32,7 @@ export default function Ajouter() {
                 value="facture"
                 onClick={onChangeType1}
                 checked={type1 == 'facture'}
+                readOnly
               />
               <label className="form-check-label">Facutre</label>
             </div>
@@ -56,6 +57,7 @@ export default function Ajouter() {
                   value="formation"
                   onClick={onChangeType2}
                   checked={type2 == 'formation'}
+                  readOnly
                 />
                 <label className="form-check-label">Formation</label>
               </div>
@@ -67,12 +69,12 @@ export default function Ajouter() {
                   value="recrutement"
                   onClick={onChangeType2}
                 />
-                <label className="form-check-label">Recrutement</label>
+                <label className="form-checka-label">Recrutement</label>
               </div>
             </div>
           </div>
           {type2 == 'formation' ? (
-            <FormationForm type={type1} />
+            <FormationForm type={type1} client="hmida" clientadd="w9ida" />
           ) : (
             <RecrutementForm type={type1} />
           )}

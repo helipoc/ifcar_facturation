@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-
+import GenerateNum from '../../api/GenerateNumFac';
+import { TemplateHandler } from 'easy-template-x';
+import { NumberToLetter } from 'convertir-nombre-lettre';
+import fs from 'fs';
 const defaultThemeState = {
   desi: '',
   lieu: '',
@@ -17,12 +20,56 @@ export default function FormationForm(props: any) {
     setTheme((st) => ({ ...st, [e.target.name]: e.target.value }));
   };
   const addTheme = () => {
+    theme.nb_ben = theme.nb_ben.padStart(2, '0');
+    theme.nb_grp = theme.nb_grp.padStart(2, '0');
+    theme.nb_jr = theme.nb_jr.padStart(2, '0');
+    theme.pr_jr = (+theme.pr_jr).toFixed(2);
     setThemes((thms) => [...thms, { ...theme }]);
     setTheme(defaultThemeState);
     console.log(themes);
   };
 
-  const handlFactuer = () => {};
+  const handlFactuer = () => {
+    const seed = {
+      client: props.client,
+      clientadd: props.clientadd,
+      num_fac: '',
+      themes: [...themes],
+      lettre: '',
+      tva: 0.2,
+      total_ht: '',
+      total: '',
+    };
+    seed.num_fac = GenerateNum();
+    seed.themes = seed.themes.map((t) => ({
+      ...t,
+      mt_ht: (t.nb_jr * t.pr_jr).toFixed(2),
+    }));
+    seed.total_ht = parseFloat(
+      seed.themes.reduce((a, t) => a + t.mt_ht, 0)
+    ).toFixed(2);
+    seed.tva *= parseFloat(seed.total_ht);
+    seed.tva = parseFloat(seed.tva.toFixed(2));
+    seed.total = parseFloat(seed.total_ht + seed.tva).toFixed(2);
+    let arr = seed.total.toString().split('.');
+    seed.lettre = NumberToLetter(arr[0]) + ' Dirhams';
+    if (arr[arr.length - 1] != '00') {
+      seed.lettre += ` et ${NumberToLetter(
+        parseInt(arr[arr.length - 1])
+      )} Centimes`;
+    }
+
+    let model = fs.readFileSync(`./models/${props.type}_formation.docx`);
+    let handler = new TemplateHandler();
+    handler.process(model, seed).then((o) => {
+      fs.writeFileSync(
+        `./${props.type == 'facture' ? 'factures' : 'devis'}/formation/${
+          seed.client
+        }_${seed.num_fac.split('/').pop()}.docx`,
+        o
+      );
+    });
+  };
   return (
     <div className="container">
       Nombre des Themes : {themes.length}
@@ -145,7 +192,9 @@ export default function FormationForm(props: any) {
           </button>
         </div>
         <div className="col">
-          <button className="btn btn-success">Facturer</button>
+          <button className="btn btn-success" onClick={handlFactuer}>
+            Facturer
+          </button>
         </div>
       </div>
     </div>
