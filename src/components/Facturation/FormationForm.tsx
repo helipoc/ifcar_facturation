@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import GenerateNum from '../../api/GenerateNumFac';
 import { TemplateHandler } from 'easy-template-x';
-import { NumberToLetter } from 'convertir-nombre-lettre';
 import fs from 'fs';
+import { toast } from 'react-toastify';
+
+const { NumberToLetter } = require('convertir-nombre-lettre');
 const defaultThemeState = {
   desi: '',
   lieu: '',
@@ -36,7 +38,7 @@ export default function FormationForm(props: any) {
       num_fac: '',
       themes: [...themes],
       lettre: '',
-      tva: 0.2,
+      tva: '',
       total_ht: '',
       total: '',
     };
@@ -48,9 +50,8 @@ export default function FormationForm(props: any) {
     seed.total_ht = parseFloat(
       seed.themes.reduce((a, t) => a + t.mt_ht, 0)
     ).toFixed(2);
-    seed.tva *= parseFloat(seed.total_ht);
-    seed.tva = parseFloat(seed.tva.toFixed(2));
-    seed.total = parseFloat(seed.total_ht + seed.tva).toFixed(2);
+    seed.tva = (parseFloat(seed.total_ht) * 0.2).toFixed(2);
+    seed.total = (parseFloat(seed.total_ht) + parseFloat(seed.tva)).toFixed(2);
     let arr = seed.total.toString().split('.');
     seed.lettre = NumberToLetter(arr[0]) + ' Dirhams';
     if (arr[arr.length - 1] != '00') {
@@ -68,6 +69,7 @@ export default function FormationForm(props: any) {
         }_${seed.num_fac.split('/').pop()}.docx`,
         o
       );
+      toast.success(`Facturation pour ${props.client}`);
     });
   };
   return (

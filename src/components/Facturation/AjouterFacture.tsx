@@ -76,7 +76,7 @@ export default function Ajouter() {
           {type2 == 'formation' ? (
             <FormationForm type={type1} client="hmida" clientadd="w9ida" />
           ) : (
-            <RecrutementForm type={type1} />
+            <RecrutementForm type={type1} client="3bi9a" clientadd="zri9a" />
           )}
         </div>
       </div>
