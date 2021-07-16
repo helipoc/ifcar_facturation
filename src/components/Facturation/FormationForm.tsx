@@ -3,6 +3,7 @@ import GenerateNum from '../../api/GenerateNumFac';
 import { TemplateHandler } from 'easy-template-x';
 import fs from 'fs';
 import { toast } from 'react-toastify';
+import { insertFacture } from '../../api/DB';
 
 const { NumberToLetter } = require('convertir-nombre-lettre');
 const defaultThemeState = {
@@ -62,7 +63,7 @@ export default function FormationForm(props: any) {
 
     let model = fs.readFileSync(`./models/${props.type}_formation.docx`);
     let handler = new TemplateHandler();
-    handler.process(model, seed).then((o) => {
+    handler.process(model, seed).then(async (o) => {
       fs.writeFileSync(
         `./${props.type == 'facture' ? 'factures' : 'devis'}/formation/${
           seed.client
@@ -70,6 +71,11 @@ export default function FormationForm(props: any) {
         o
       );
       toast.success(`Facturation pour ${props.client}`);
+      await insertFacture({
+        num_fac: seed.num_fac,
+        total: seed.total,
+        url: 'test.https',
+      });
     });
   };
   return (
