@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import GenerateNum from '../../api/GenerateNumFac';
 import { TemplateHandler } from 'easy-template-x';
 import fs from 'fs';
 import { toast } from 'react-toastify';
@@ -32,18 +31,17 @@ export default function FormationForm(props: any) {
     console.log(themes);
   };
 
-  const handlFactuer = () => {
+  const handlFactuer = async () => {
     const seed = {
       client: props.client,
       clientadd: props.clientadd,
-      num_fac: '',
       themes: [...themes],
       lettre: '',
+      num_fac: '',
       tva: '',
       total_ht: '',
       total: '',
     };
-    seed.num_fac = GenerateNum();
     seed.themes = seed.themes.map((t) => ({
       ...t,
       mt_ht: (t.nb_jr * t.pr_jr).toFixed(2),
@@ -60,22 +58,35 @@ export default function FormationForm(props: any) {
         parseInt(arr[arr.length - 1])
       )} Centimes`;
     }
-
+    let nmfac: string;
+    if (props.type == 'facture') {
+      nmfac = await insertFacture(
+        {
+          total: seed.total,
+          url: 'test.https',
+        },
+        props.client
+      );
+      seed.num_fac = nmfac;
+    } else {
+      seed.num_fac = `DV_${new Date().getFullYear()}`;
+    }
     let model = fs.readFileSync(`./models/${props.type}_formation.docx`);
     let handler = new TemplateHandler();
     handler.process(model, seed).then(async (o) => {
-      fs.writeFileSync(
-        `./${props.type == 'facture' ? 'factures' : 'devis'}/formation/${
-          seed.client
-        }_${seed.num_fac.split('/').pop()}.docx`,
-        o
-      );
       toast.success(`Facturation pour ${props.client}`);
-      await insertFacture({
-        num_fac: seed.num_fac,
-        total: seed.total,
-        url: 'test.https',
-      });
+      if (props.type == 'facture') {
+        fs.writeFileSync(
+          `./factures/formation/${seed.client}_${nmfac.split('/').pop()}.docx`,
+          o
+        );
+      } else {
+        fs.writeFileSync(
+          `./devis/formation/${seed.client}_DV${new Date().getFullYear()}.docx`,
+          o
+        );
+      }
+      setThemes([]);
     });
   };
   return (

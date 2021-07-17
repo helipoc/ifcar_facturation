@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { TemplateHandler } from 'easy-template-x';
 import fs from 'fs';
-import GenerateNum from '../../api/GenerateNumFac';
 import { toast } from 'react-toastify';
+import { insertFacture } from '../../api/DB';
 
 const { NumberToLetter } = require('convertir-nombre-lettre');
 const DefaultItemState = {
@@ -25,19 +25,18 @@ export default function RecrutementForm(props: any) {
     setItem(DefaultItemState);
   };
 
-  const handlFactuer = () => {
+  const handlFactuer = async () => {
     const seed = {
       client: props.client,
       clientadd: props.clientadd,
-      num_fac: '',
       items: [...items],
       lettre: '',
       tva: '',
+      num_fac: '',
       total_ht: '',
       total: '',
     };
 
-    seed.num_fac = GenerateNum();
     seed.items = seed.items.map((t) => ({
       ...t,
       mt: (t.pu * t.qte).toFixed(2),
@@ -55,16 +54,40 @@ export default function RecrutementForm(props: any) {
       )} Centimes`;
     }
 
+    let nmfac: string;
+    if (props.type == 'facture') {
+      nmfac = await insertFacture(
+        {
+          total: seed.total,
+          url: 'test.https',
+        },
+        props.client
+      );
+      seed.num_fac = nmfac;
+    } else {
+      seed.num_fac = `DV_${new Date().getFullYear()}`;
+    }
+
     let model = fs.readFileSync(`./models/${props.type}_recrutement.docx`);
     let handler = new TemplateHandler();
-    handler.process(model, seed).then((o) => {
-      fs.writeFileSync(
-        `./${props.type == 'facture' ? 'factures' : 'devis'}/recrutement/${
-          seed.client
-        }_${seed.num_fac.split('/').pop()}.docx`,
-        o
-      );
+    handler.process(model, seed).then(async (o) => {
       toast.success(`Facturation pour ${props.client}`);
+      if (props.type == 'facture') {
+        fs.writeFileSync(
+          `./factures/recrutement/${seed.client}_${nmfac
+            .split('/')
+            .pop()}.docx`,
+          o
+        );
+      } else {
+        fs.writeFileSync(
+          `./devis/recrutement/${
+            seed.client
+          }_DV${new Date().getFullYear()}.docx`,
+          o
+        );
+      }
+      setItems([]);
     });
   };
   return (

@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import HOME from '../goBack';
 import FormationForm from './FormationForm';
 import RecrutementForm from './RecrutementForm';
-import { getClients } from '../../api/DB';
 
 export default function Ajouter() {
+  const { getClients } = require('../../api/DB');
   const [type1, setType1] = useState('');
   const [type2, setType2] = useState('');
   const onChangeType1 = (e: any) => setType1(e.target.value);
@@ -13,8 +13,9 @@ export default function Ajouter() {
   const [clients, setClients] = useState<any[]>([]);
 
   useEffect(() => {
-    let data = async () => await getClients();
-    data().then((dd) => setClients([...dd]));
+    getClients()
+      .then((dd: any) => setClients([...dd]))
+      .catch((err: any) => console.log(err));
   }, []);
 
   const handSelectChange = (e: any) => {
@@ -33,8 +34,9 @@ export default function Ajouter() {
             className="form-select"
             aria-label="Default select example"
             onChange={handSelectChange}
+            defaultValue={'DEFAULT'}
           >
-            <option value="err" selected>
+            <option value="DEFAULT" disabled>
               Sélectionner un client
             </option>
             {clients.map((c) => (
@@ -93,14 +95,14 @@ export default function Ajouter() {
               </div>
             </div>
           </div>
-          {type2 == 'formation' && (
+          {type2 == 'formation' && client.client != '' && (
             <FormationForm
               type={type1}
               client={client.client}
               clientadd={client.address}
             />
           )}
-          {type2 == 'recrutement' && (
+          {type2 == 'recrutement' && client.client != '' && (
             <RecrutementForm
               type={type1}
               client={client.client}

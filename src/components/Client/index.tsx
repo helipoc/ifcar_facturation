@@ -14,13 +14,10 @@ export default function Client() {
   const [clients, setClients] = useState<any[]>([]);
   useEffect(() => {
     FillData();
-    console.log(clients);
   }, []);
 
   const FillData = () => {
-    getClients()
-      .then((data) => setClients([...data]))
-      .then((r) => console.log(clients));
+    getClients().then((data) => setClients([...data]));
   };
   const add = async () => {
     if (client.client == '' || client.address == '' || client.tel == '') {
