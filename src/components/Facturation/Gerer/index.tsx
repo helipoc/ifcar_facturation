@@ -27,7 +27,7 @@ export default function Gerer() {
               <th scope="col">Num Fac</th>
               <th scope="col">Client</th>
               <th scope="col">Type</th>
-              <th scope="col">Total TTC (en Dh)</th>
+              <th scope="col">Total TTC</th>
               <th scope="col">État</th>
             </tr>
           </thead>
@@ -37,7 +37,7 @@ export default function Gerer() {
                 <td>{c.num_fac}</td>
                 <td>{c.client}</td>
                 <td>{c.type}</td>
-                <td>{c.total}</td>
+                <td>{c.total} DH</td>
                 <td>
                   {c.paid ? (
                     <p className="text-success">Payé</p>

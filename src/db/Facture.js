@@ -9,6 +9,10 @@ const FactureSchema = new mongoose.Schema({
     url:String,
     client:String,
     type:String,
+    date:{
+        type:Date,
+        default:Date.now
+    },
     paid:{
         type:Boolean,
         default:false

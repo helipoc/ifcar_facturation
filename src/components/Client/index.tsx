@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import HOME from '../goBack';
 import { getClients, insertClient } from '../../api/DB';
 import { toast } from 'react-toastify';
+import Spinner from '../Spinner';
 
 const defaultClientState = {
   client: '',
@@ -99,6 +100,7 @@ export default function Client() {
             <th scope="col">Fix</th>
             <th scope="col">Adresse</th>
             <th scope="col">Nombre des Factures</th>
+            <th scope="col">Nombre des Factures Payé</th>
           </tr>
         </thead>
         <tbody>
@@ -108,10 +110,12 @@ export default function Client() {
               <td>{c.tel}</td>
               <td>{c.address}</td>
               <td>{c.Factures.length}</td>
+              <td>{c.Factures.filter((x: any) => x.paid).length}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      {clients.length == 0 && <Spinner />}
     </div>
   );
 }

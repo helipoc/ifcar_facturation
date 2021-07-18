@@ -1,7 +1,7 @@
 import Client from '../db/Client';
 import Facture from '../db/Facture';
 export async function getClients() {
-  let clients = await Client.find({}).exec();
+  let clients = await Client.find({}).populate('Factures').exec();
   return clients.map((c) => c._doc);
 }
 
