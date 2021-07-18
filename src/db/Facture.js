@@ -1,9 +1,14 @@
 const mongoose = require('mongoose')
 import NumGen from "./NumGenerator"
 const FactureSchema = new mongoose.Schema({
-    num_fac:String,
+    num_fac:{
+        type:String,
+        unique:true
+    },
     total:Number,
     url:String,
+    client:String,
+    type:String,
     paid:{
         type:Boolean,
         default:false

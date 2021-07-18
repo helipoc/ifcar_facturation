@@ -60,6 +60,7 @@ export default function RecrutementForm(props: any) {
         {
           total: seed.total,
           url: 'test.https',
+          type: 'Recrutement',
         },
         props.client
       );

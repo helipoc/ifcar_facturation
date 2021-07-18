@@ -24,6 +24,7 @@ export default function Client() {
       toast.error('Remplir tous les champs');
       return;
     }
+    client.client = client.client.replace(/^./, (c) => c.toUpperCase());
     await insertClient(client);
     FillData();
     setClient(defaultClientState);

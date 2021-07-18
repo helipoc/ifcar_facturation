@@ -64,6 +64,7 @@ export default function FormationForm(props: any) {
         {
           total: seed.total,
           url: 'test.https',
+          type: 'Formation',
         },
         props.client
       );

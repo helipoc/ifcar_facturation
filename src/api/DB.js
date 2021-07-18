@@ -15,18 +15,24 @@ export async function insertClient(obj) {
 }
 
 export async function getFactures() {
-  return await Facture.find({})
-    .exec()
-    .map((f) => f._doc);
+  let facs = await Facture.find({}).exec()
+    return facs.map((f) => f._doc);
 }
 
 export async function insertFacture(obj, clientname) {
   let d = await Facture.create({
     total: obj.total,
     url: obj.url,
+    type:obj.type,
+    client:clientname
   });
   let client = await Client.findOne({ client: clientname });
   client.Factures.push(d._doc._id);
   await client.save();
   return d._doc.num_fac
+}
+
+
+export async function MarkAsPaid(factureid){
+  let fac = await Facture.updateOne({_id:factureid},{paid:true})
 }

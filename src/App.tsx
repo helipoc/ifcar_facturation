@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 import Client from './components/Client';
 import Facturation from './components/Facturation';
 import Ajouter from './components/Facturation/AjouterFacture';
+import Gerer from './components/Facturation/Gerer';
 import connect from './db/connect';
 connect();
 const Hello = () => {
@@ -49,6 +50,7 @@ export default function App() {
       <Switch>
         <Route path="/clients" component={Client} />
         <Route path="/facturation/ajouter" exact component={Ajouter} />
+        <Route path="/facturation/manage" exact component={Gerer} />
         <Route path="/facturation" component={Facturation} />
         <Route path="/" component={Hello} />
       </Switch>
