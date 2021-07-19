@@ -8,7 +8,7 @@ export default function Client() {
       <HOME />
       <div className="row mb-5 d-flex align-items-center">
         <h1 className="display-6 text-center text-secondary mt-5">
-          Gestion des Factures et Devis
+          Gestion des Factures
         </h1>
       </div>
       <div className="row">

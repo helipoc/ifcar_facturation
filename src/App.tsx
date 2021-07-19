@@ -4,6 +4,7 @@ import Client from './components/Client';
 import Facturation from './components/Facturation';
 import Ajouter from './components/Facturation/AjouterFacture';
 import Gerer from './components/Facturation/Gerer';
+import Stat from './components/Stat';
 import connect from './db/connect';
 connect();
 const Hello = () => {
@@ -36,7 +37,7 @@ const Hello = () => {
             </button>
           </Link>
           <button className="btn btn-warning" style={{ width: '8em' }}>
-            Rapport
+            Statistiques
           </button>
         </div>
       </div>
@@ -52,6 +53,7 @@ export default function App() {
         <Route path="/facturation/ajouter" exact component={Ajouter} />
         <Route path="/facturation/manage" exact component={Gerer} />
         <Route path="/facturation" component={Facturation} />
+        <Route path="/stat" component={Stat} />
         <Route path="/" component={Hello} />
       </Switch>
     </Router>
