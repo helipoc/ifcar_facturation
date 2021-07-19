@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import HOME from '../../goBack';
 import { getFactures, MarkAsPaid } from '../../../api/DB';
+import Spinner from '../../Spinner';
 
 export default function Gerer() {
   const [factures, setFactures] = useState<any[]>([]);
@@ -54,6 +55,7 @@ export default function Gerer() {
             ))}
           </tbody>
         </table>
+        {factures.length == 0 && <Spinner />}
       </div>
     </div>
   );

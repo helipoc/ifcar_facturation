@@ -99,8 +99,8 @@ export default function Client() {
             <th scope="col">Client</th>
             <th scope="col">Fix</th>
             <th scope="col">Adresse</th>
-            <th scope="col">Nombre des Factures</th>
             <th scope="col">Nombre des Factures Payé</th>
+            <th scope="col">Total</th>
           </tr>
         </thead>
         <tbody>
@@ -109,8 +109,14 @@ export default function Client() {
               <td>{c.client}</td>
               <td>{c.tel}</td>
               <td>{c.address}</td>
-              <td>{c.Factures.length}</td>
               <td>{c.Factures.filter((x: any) => x.paid).length}</td>
+              <td>
+                {c.Factures.map((x: any) => x._doc).reduce(
+                  (x: any, a: any) => x + (a.paid ? a.total : 0),
+                  0
+                )}{' '}
+                DH
+              </td>
             </tr>
           ))}
         </tbody>
