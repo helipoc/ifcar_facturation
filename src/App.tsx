@@ -12,7 +12,7 @@ const Hello = () => {
       <div className="row mb-5 mt-5">
         <div className="col mb-5">
           <h1 className="display-1 d-flex justify-content-center text-secondary">
-            S.I IFCAR Facturation
+            IFCAR Facturation
           </h1>
         </div>
       </div>

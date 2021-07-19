@@ -7,11 +7,8 @@ import { insertFacture } from '../../api/DB';
 const { NumberToLetter } = require('convertir-nombre-lettre');
 const defaultThemeState = {
   desi: '',
-  lieu: '',
-  nb_ben: '',
   nb_grp: '',
   nb_jr: '',
-  date: '',
   pr_jr: '',
 };
 
@@ -22,7 +19,6 @@ export default function FormationForm(props: any) {
     setTheme((st) => ({ ...st, [e.target.name]: e.target.value }));
   };
   const addTheme = () => {
-    theme.nb_ben = theme.nb_ben.padStart(2, '0');
     theme.nb_grp = theme.nb_grp.padStart(2, '0');
     theme.nb_jr = theme.nb_jr.padStart(2, '0');
     theme.pr_jr = (+theme.pr_jr).toFixed(2);
@@ -63,7 +59,6 @@ export default function FormationForm(props: any) {
       nmfac = await insertFacture(
         {
           total: seed.total,
-          url: 'test.https',
           type: 'Formation',
         },
         props.client
@@ -110,38 +105,6 @@ export default function FormationForm(props: any) {
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Lieu
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              value={theme.lieu}
-              name="lieu"
-              onChange={handlChange}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-4">
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Nombre bénéficiare
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              value={theme.nb_ben}
-              name="nb_ben"
-              onChange={handlChange}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="row">
         <div className="col-4">
           <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1">
@@ -168,22 +131,6 @@ export default function FormationForm(props: any) {
               className="form-control"
               value={theme.nb_jr}
               name="nb_jr"
-              onChange={handlChange}
-            />
-          </div>
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-4">
-          <div className="input-group mb-3">
-            <span className="input-group-text" id="basic-addon1">
-              Date de réalistion
-            </span>
-            <input
-              type="text"
-              className="form-control"
-              value={theme.date}
-              name="date"
               onChange={handlChange}
             />
           </div>

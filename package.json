@@ -1,7 +1,7 @@
 {
   "name": "electron-react-boilerplate",
-  "productName": "ElectronReact",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Fast Refresh for rapid application development",
+  "productName": "IFCAR_Facturation",
+  "description": "Application de Facturation - IFCAR",
   "scripts": {
     "build": "concurrently \"yarn build:main\" \"yarn build:renderer\"",
     "build:main": "cross-env NODE_ENV=production webpack --config ./.erb/configs/webpack.config.main.prod.babel.js",
@@ -30,7 +30,7 @@
     ]
   },
   "build": {
-    "productName": "ElectronReact",
+    "productName": "IFCAR_Facturation",
     "appId": "org.erb.ElectronReact",
     "files": [
       "dist/",
@@ -95,7 +95,7 @@
     "url": "git+https://github.com/electron-react-boilerplate/electron-react-boilerplate.git"
   },
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
+    "name": "IFCAR",
     "email": "electronreactboilerplate@gmail.com",
     "url": "https://electron-react-boilerplate.js.org"
   },

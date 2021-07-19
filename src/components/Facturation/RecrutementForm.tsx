@@ -59,7 +59,6 @@ export default function RecrutementForm(props: any) {
       nmfac = await insertFacture(
         {
           total: seed.total,
-          url: 'test.https',
           type: 'Recrutement',
         },
         props.client

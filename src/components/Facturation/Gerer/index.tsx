@@ -5,16 +5,20 @@ import Spinner from '../../Spinner';
 
 export default function Gerer() {
   const [factures, setFactures] = useState<any[]>([]);
-
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
-    getFactures().then((r: any) => setFactures([...r]));
+    getFactures().then((r: any) => {
+      setFactures([...r]);
+      setLoaded(true);
+    });
   }, []);
 
   const handlPay = async (id: string) => {
     await MarkAsPaid(id);
-    setFactures((facs) =>
-      [...facs].map((f) => (f._id == id ? { ...f, paid: true } : { ...f }))
-    );
+    getFactures().then((r: any) => {
+      setFactures([...r]);
+      setLoaded(true);
+    });
   };
   return (
     <div className="container">
@@ -22,7 +26,7 @@ export default function Gerer() {
         <HOME />
       </div>
       <div className="row">
-        <table className="table table-striped table-borderless table-hover">
+        <table className="table table-striped table-hover">
           <thead>
             <tr>
               <th scope="col">Num Fac</th>
@@ -30,6 +34,7 @@ export default function Gerer() {
               <th scope="col">Type</th>
               <th scope="col">Total TTC</th>
               <th scope="col">État</th>
+              <th scope="col">Date de paiemet</th>
             </tr>
           </thead>
           <tbody>
@@ -47,15 +52,28 @@ export default function Gerer() {
                       className="btn btn-warning btn-sm"
                       onClick={() => handlPay(c._id)}
                     >
-                      Marquer comme payé
+                      Non Payé
                     </button>
                   )}
+                </td>
+                <td>
+                  {c.paid
+                    ? `Le  ${c.paidOn.toLocaleString().split(' ')[0]}`
+                    : '-'}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        {factures.length == 0 && <Spinner />}
+        {factures.length == 0 && !loaded && <Spinner />}
+        {factures.length == 0 && loaded && (
+          <div
+            className="alert alert-warning d-flex justify-content-center"
+            role="alert"
+          >
+            La base données des facutres est vide !
+          </div>
+        )}
       </div>
     </div>
   );

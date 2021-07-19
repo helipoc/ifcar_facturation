@@ -13,12 +13,16 @@ const defaultClientState = {
 export default function Client() {
   const [client, setClient] = useState(defaultClientState);
   const [clients, setClients] = useState<any[]>([]);
+  const [loaded, setLoaded] = useState(false);
   useEffect(() => {
     FillData();
   }, []);
 
   const FillData = () => {
-    getClients().then((data) => setClients([...data]));
+    getClients().then((data) => {
+      setClients([...data]);
+      setLoaded(true);
+    });
   };
   const add = async () => {
     if (client.client == '' || client.address == '' || client.tel == '') {
@@ -44,7 +48,7 @@ export default function Client() {
         <div className="col-4">
           <div className="input-group mb-3">
             <span className="input-group-text" id="basic-addon1">
-              Nom
+              Client
             </span>
             <input
               type="text"
@@ -93,7 +97,7 @@ export default function Client() {
           </button>
         </div>
       </div>
-      <table className="table table-striped table-borderless table-hover">
+      <table className="table table-striped table-hover">
         <thead>
           <tr>
             <th scope="col">Client</th>
@@ -121,7 +125,15 @@ export default function Client() {
           ))}
         </tbody>
       </table>
-      {clients.length == 0 && <Spinner />}
+      {clients.length == 0 && !loaded && <Spinner />}
+      {clients.length == 0 && loaded && (
+        <div
+          className="alert alert-warning d-flex justify-content-center"
+          role="alert"
+        >
+          La base données des clients est vide !
+        </div>
+      )}
     </div>
   );
 }
