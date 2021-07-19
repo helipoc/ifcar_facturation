@@ -36,9 +36,11 @@ const Hello = () => {
               Facturation
             </button>
           </Link>
-          <button className="btn btn-warning" style={{ width: '8em' }}>
-            Statistiques
-          </button>
+          <Link to="/stat">
+            <button className="btn btn-warning" style={{ width: '8em' }}>
+              Statistiques
+            </button>
+          </Link>
         </div>
       </div>
     </div>

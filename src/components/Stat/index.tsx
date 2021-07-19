@@ -5,7 +5,7 @@ export default function Stat() {
   return (
     <div className="container">
       <HOME />
-      <h1>En construction</h1>
+      <h4 className="display-1 text-center">En construction</h4>
     </div>
   );
 }
