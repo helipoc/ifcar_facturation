@@ -21,7 +21,6 @@ export async function getFactures() {
 export async function insertFacture(obj, clientname) {
   let d = await Facture.create({
     total: obj.total,
-    url: obj.url,
     type: obj.type,
     client: clientname,
   });
@@ -32,8 +31,20 @@ export async function insertFacture(obj, clientname) {
 }
 
 export async function MarkAsPaid(factureid) {
-  let fac = await Facture.updateOne(
+    await Facture.updateOne(
     { _id: factureid },
     { paid: true, paidOn: new Date() }
   );
+}
+
+export async function TotalFactureTTC(date1,date2){
+  let f = await Facture.find({type:"Formation",paid:true}).exec()
+  let r = await Facture.find({type:"Recrutement",paid:true}).exec()
+  let c = await Facture.find({type:"Conseil",paid:true}).exec()
+  let totalf = f.map(c=>c._doc.total).reduce((a,b)=>a+b,0)
+  let totalr = r.map(c=>c._doc.total).reduce((a,b)=>a+b,0)
+  let totalc = c.map(c=>c._doc.total).reduce((a,b)=>a+b,0)
+
+  return [totalf,totalr,totalc]
+
 }

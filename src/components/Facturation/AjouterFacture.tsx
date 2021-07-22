@@ -76,9 +76,9 @@ export default function Ajouter() {
                   className="form-check-input"
                   type="radio"
                   name="typeFacture"
-                  value="formation"
+                  value="Formation"
                   onClick={onChangeType2}
-                  checked={type2 == 'formation'}
+                  checked={type2 == 'Formation'}
                   readOnly
                 />
                 <label className="form-check-label">Formation</label>
@@ -88,27 +88,39 @@ export default function Ajouter() {
                   className="form-check-input"
                   type="radio"
                   name="typeFacture"
-                  value="recrutement"
+                  value="Recrutement"
                   onClick={onChangeType2}
                 />
                 <label className="form-checka-label">Recrutement</label>
               </div>
+              <div className="form-check form-check-inline">
+                <input
+                  className="form-check-input"
+                  type="radio"
+                  name="typeFacture"
+                  value="Conseil"
+                  onClick={onChangeType2}
+                />
+                <label className="form-checka-label">Conseil</label>
+              </div>
             </div>
           </div>
-          {type2 == 'formation' && client.client != '' && (
+          {type2 == 'Formation' && client.client != '' && (
             <FormationForm
               type={type1}
               client={client.client}
               clientadd={client.address}
             />
           )}
-          {type2 == 'recrutement' && client.client != '' && (
-            <RecrutementForm
-              type={type1}
-              client={client.client}
-              clientadd={client.address}
-            />
-          )}
+          {(type2 == 'Recrutement' || type2 == 'Conseil') &&
+            client.client != '' && (
+              <RecrutementForm
+                type={type1}
+                type2={type2}
+                client={client.client}
+                clientadd={client.address}
+              />
+            )}
         </div>
       </div>
     </div>

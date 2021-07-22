@@ -59,7 +59,7 @@ export default function RecrutementForm(props: any) {
       nmfac = await insertFacture(
         {
           total: seed.total,
-          type: 'Recrutement',
+          type: props.type2,
         },
         props.client
       );
@@ -74,14 +74,14 @@ export default function RecrutementForm(props: any) {
       toast.success(`Facturation pour ${props.client}`);
       if (props.type == 'facture') {
         fs.writeFileSync(
-          `./factures/recrutement/${seed.client}_${nmfac
+          `./factures/${props.type2}/${seed.client}_${nmfac
             .split('/')
             .pop()}.docx`,
           o
         );
       } else {
         fs.writeFileSync(
-          `./devis/recrutement/${
+          `./devis/${props.type2}/${
             seed.client
           }_DV${new Date().getFullYear()}.docx`,
           o
