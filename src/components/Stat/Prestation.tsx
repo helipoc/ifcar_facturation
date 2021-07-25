@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { TotalFactureTTC } from '../../api/DB';
 
-export default function PreStation() {
+export default function PreStation(props) {
   const [totalFacs, setTotalFacs] = useState<any[]>([]);
   const data = {
     labels: ['Formation', 'Recrutement', 'Conseil'],
@@ -21,6 +21,7 @@ export default function PreStation() {
       console.log(res);
     });
   }, []);
+  console.log(props.date1);
   return (
     <div className="row">
       <div className="col-10 offset-1">

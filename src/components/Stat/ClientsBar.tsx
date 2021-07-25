@@ -15,7 +15,7 @@ export default function PreStation() {
         backgroundColor: '#30336b',
       },
       {
-        label: 'Total TTC Recrutement (en DH) ',
+        label: 'Total TTC Formation (en DH) ',
         data: clients.map((c) =>
           c.Factures.reduce(
             (a: any, b: any) =>

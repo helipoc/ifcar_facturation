@@ -4,6 +4,8 @@ import Prestation from './Prestation';
 import ClientsBar from './ClientsBar';
 export default function Stat() {
   const [barFor, setBarFor] = useState('');
+  const [dateDe, setDateDe] = useState(null);
+  const [dateA, setDateA] = useState(null);
   const changeHandler = (e: any) => {
     setBarFor(e.target.value);
   };
@@ -11,7 +13,7 @@ export default function Stat() {
     <div className="container">
       <HOME />
       <div className="row">
-        <div className="col mt-5 ml-5">
+        <div className="col mt-5 ml-5 mb-2">
           <div className="form-check form-check-inline">
             <input
               className="form-check-input"
@@ -34,8 +36,18 @@ export default function Stat() {
           </div>
         </div>
       </div>
-      {barFor == 'prestation' && <Prestation />}
-      {barFor == 'clients' && <ClientsBar />}
+      <div className="row mb-5">
+        <div className="col-4">
+          <label htmlFor="start">De : </label>{' '}
+          <input type="date" onChange={(e: any) => setDateDe(e.target.value)} />
+        </div>
+        <div className="col-4">
+          <label htmlFor="start">à : </label>{' '}
+          <input type="date" onChange={(e: any) => setDateA(e.target.value)} />
+        </div>
+      </div>
+      {barFor == 'prestation' && <Prestation date1={dateDe} date2={dateA} />}
+      {barFor == 'clients' && <ClientsBar date1={dateDe} date2={dateA} />}
     </div>
   );
 }
