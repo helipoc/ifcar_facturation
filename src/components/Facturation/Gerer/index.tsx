@@ -58,7 +58,11 @@ export default function Gerer() {
                 </td>
                 <td>
                   {c.paid
-                    ? `Le  ${c.paidOn.toLocaleString().split(' ')[0]}`
+                    ? `Le  ${
+                        c.paidOn
+                          .toLocaleString()
+                          .split(new RegExp(',|/s', 'g'))[0]
+                      }`
                     : '-'}
                 </td>
               </tr>

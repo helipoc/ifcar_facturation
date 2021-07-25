@@ -1,40 +1,41 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import HOME from '../goBack';
-import { Bar } from 'react-chartjs-2';
-import { TotalFactureTTC } from '../../api/DB';
-
-const randomColor = require('randomcolor');
-
+import Prestation from './Prestation';
+import ClientsBar from './ClientsBar';
 export default function Stat() {
-  const [totalFacs, setTotalFacs] = useState<any[]>([]);
-  const data = {
-    labels: ['Formation', 'Recrutement', 'Conseil'],
-    datasets: [
-      {
-        label: 'Total TTC (en DH) ',
-        data: [...totalFacs],
-        backgroundColor: totalFacs.map(() => randomColor()),
-      },
-    ],
+  const [barFor, setBarFor] = useState('');
+  const changeHandler = (e: any) => {
+    setBarFor(e.target.value);
   };
-
-  useEffect(() => {
-    TotalFactureTTC().then((res) => {
-      setTotalFacs([...res]);
-      console.log(res);
-    });
-  }, []);
   return (
     <div className="container">
       <HOME />
       <div className="row">
-        <h4 className="display-1 text-center mb-3">En construction</h4>
-      </div>
-      <div className="row">
-        <div className="col-10 offset-1">
-          <Bar data={data} />
+        <div className="col mt-5 ml-5">
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="barFor"
+              value="prestation"
+              onClick={changeHandler}
+            />
+            <label className="form-check-label">Par Prestation</label>
+          </div>
+          <div className="form-check form-check-inline">
+            <input
+              className="form-check-input"
+              type="radio"
+              name="barFor"
+              value="clients"
+              onClick={changeHandler}
+            />
+            <label className="form-check-label">Par Client</label>
+          </div>
         </div>
       </div>
+      {barFor == 'prestation' && <Prestation />}
+      {barFor == 'clients' && <ClientsBar />}
     </div>
   );
 }
