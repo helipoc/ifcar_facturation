@@ -75,3 +75,18 @@ export async function TotalFactureTTC(date1, date2) {
 
   return [totalc + totalf + totalr, totalf, totalr, totalc];
 }
+
+export async function SemChartData() {
+  let facs = await getFactures();
+  let t1 = facs.filter(
+    (f) => f.paid && f.paidOn.getMonth() >= 0 && f.paidOn.getMonth() <= 2
+  );
+  let t2 = facs.filter(
+    (f) => f.paid && f.paidOn.getMonth() >= 3 && f.paidOn.getMonth() <= 5
+  );
+  let t3 = facs.filter(
+    (f) => f.paid && f.paidOn.getMonth() >= 6 && f.paidOn.getMonth() <= 8
+  );
+  let t4 = facs.filter((f) => f.paid && f.paidOn.getMonth() >= 9);
+  return [t1, t2, t3, t4];
+}

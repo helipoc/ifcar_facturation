@@ -31,11 +31,8 @@ export default function PreStation(props: any) {
   };
 
   useEffect(() => {
-    console.log(props.date1);
-    console.log(props.date2);
     TotalFactureTTC(props.date1, props.date2).then((res) => {
       setTotalFacs([...res]);
-      console.log(res);
     });
   }, [props.date1, props.date2]);
 
