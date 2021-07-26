@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import HOME from '../goBack';
-import { getClients, insertClient } from '../../api/DB';
+import { getClients, insertClient, delCli } from '../../api/DB';
 import { toast } from 'react-toastify';
 import Spinner from '../Spinner';
 
@@ -37,6 +37,11 @@ export default function Client() {
 
   const handlChange = (e: any) => {
     setClient((st) => ({ ...st, [e.target.name]: e.target.value }));
+  };
+
+  const delCliHandler = async (id: string) => {
+    await delCli(id);
+    FillData();
   };
 
   return (
@@ -105,6 +110,7 @@ export default function Client() {
             <th scope="col">Adresse</th>
             <th scope="col">Nombre des Factures Payé</th>
             <th scope="col">Total</th>
+            <th scope="col">Supprimer Client</th>
           </tr>
         </thead>
         <tbody>
@@ -115,11 +121,18 @@ export default function Client() {
               <td>{c.address}</td>
               <td>{c.Factures.filter((x: any) => x.paid).length}</td>
               <td>
-                {c.Factures.map((x: any) => x._doc).reduce(
-                  (x: any, a: any) => x + (a.paid ? a.total : 0),
-                  0
-                )}{' '}
+                {c.Factures.map((x: any) => x._doc)
+                  .reduce((x: any, a: any) => x + (a.paid ? a.total : 0), 0)
+                  .toFixed(2)}{' '}
                 DH
+              </td>
+              <td>
+                <button
+                  className="btn btn-danger"
+                  onClick={() => delCliHandler(c._id)}
+                >
+                  Supp
+                </button>
               </td>
             </tr>
           ))}

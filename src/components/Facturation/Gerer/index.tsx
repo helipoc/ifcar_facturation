@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import HOME from '../../goBack';
-import { getFactures, MarkAsPaid } from '../../../api/DB';
+import { getFactures, MarkAsPaid, delFac } from '../../../api/DB';
 import Spinner from '../../Spinner';
 
 export default function Gerer() {
   const [factures, setFactures] = useState<any[]>([]);
   const [loaded, setLoaded] = useState(false);
-  useEffect(() => {
+  const loadFacs = () => {
     getFactures().then((r: any) => {
       setFactures([...r]);
-      setLoaded(true);
     });
+  };
+  useEffect(() => {
+    loadFacs();
+    setLoaded(true);
   }, []);
 
   const handlPay = async (id: string) => {
     await MarkAsPaid(id);
-    getFactures().then((r: any) => {
-      setFactures([...r]);
-      setLoaded(true);
-    });
+    loadFacs();
+  };
+  const delFacHandler = async (id: string) => {
+    await delFac(id);
+    loadFacs();
   };
   return (
     <div className="container">
@@ -35,6 +39,7 @@ export default function Gerer() {
               <th scope="col">Total TTC</th>
               <th scope="col">État</th>
               <th scope="col">Date de paiemet</th>
+              <th scope="col">Supprimer Facture</th>
             </tr>
           </thead>
           <tbody>
@@ -61,9 +66,17 @@ export default function Gerer() {
                     ? `Le  ${
                         c.paidOn
                           .toLocaleString()
-                          .split(new RegExp(',|/s', 'g'))[0]
+                          .split(new RegExp(',| ', 'g'))[0]
                       }`
                     : '-'}
+                </td>
+                <td>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => delFacHandler(c._id)}
+                  >
+                    Supp
+                  </button>
                 </td>
               </tr>
             ))}

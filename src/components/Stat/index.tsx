@@ -4,8 +4,8 @@ import Prestation from './Prestation';
 import ClientsBar from './ClientsBar';
 export default function Stat() {
   const [barFor, setBarFor] = useState('');
-  const [dateDe, setDateDe] = useState(null);
-  const [dateA, setDateA] = useState(null);
+  const [dateDe, setDateDe] = useState(new Date('0'));
+  const [dateA, setDateA] = useState(new Date());
   const changeHandler = (e: any) => {
     setBarFor(e.target.value);
   };
@@ -39,15 +39,29 @@ export default function Stat() {
       <div className="row mb-5">
         <div className="col-4">
           <label htmlFor="start">De : </label>{' '}
-          <input type="date" onChange={(e: any) => setDateDe(e.target.value)} />
+          <input
+            type="date"
+            onChange={(e: any) => {
+              setDateDe(new Date(e.target.value));
+              console.log('1');
+              console.log(barFor);
+            }}
+          />
         </div>
         <div className="col-4">
           <label htmlFor="start">à : </label>{' '}
-          <input type="date" onChange={(e: any) => setDateA(e.target.value)} />
+          <input
+            type="date"
+            onChange={(e: any) => setDateA(new Date(e.target.value))}
+          />
         </div>
       </div>
-      {barFor == 'prestation' && <Prestation date1={dateDe} date2={dateA} />}
-      {barFor == 'clients' && <ClientsBar date1={dateDe} date2={dateA} />}
+      {barFor == 'prestation' && (
+        <Prestation date1={dateDe.getTime()} date2={dateA.getTime()} />
+      )}
+      {barFor == 'clients' && (
+        <ClientsBar date1={dateDe.getTime()} date2={dateA.getTime()} />
+      )}
     </div>
   );
 }
