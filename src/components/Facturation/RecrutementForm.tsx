@@ -67,7 +67,7 @@ export default function RecrutementForm(props: any) {
     } else {
       seed.num_fac = `DV_${new Date().getFullYear()}`;
     }
-
+   /*
     let model = fs.readFileSync(`./models/${props.type}_recrutement.docx`);
     let handler = new TemplateHandler();
     handler.process(model, seed).then(async (o) => {
@@ -87,8 +87,10 @@ export default function RecrutementForm(props: any) {
           o
         );
       }
-      setItems([]);
+      
     });
+    */
+   setItems([]);
   };
   return (
     <div className="container">

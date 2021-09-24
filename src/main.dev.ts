@@ -16,6 +16,10 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 import MenuBuilder from './menu';
 
+import * as d from 'dotenv';
+
+d.config();
+
 export default class AppUpdater {
   constructor() {
     log.transports.file.level = 'info';

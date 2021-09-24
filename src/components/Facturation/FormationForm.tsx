@@ -67,6 +67,7 @@ export default function FormationForm(props: any) {
     } else {
       seed.num_fac = `DV_${new Date().getFullYear()}`;
     }
+    /*
     let model = fs.readFileSync(`./models/${props.type}_formation.docx`);
     let handler = new TemplateHandler();
     handler.process(model, seed).then(async (o) => {
@@ -82,8 +83,10 @@ export default function FormationForm(props: any) {
           o
         );
       }
-      setThemes([]);
+      
     });
+    */
+   setThemes([]);
   };
   return (
     <div className="container">
